@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "railties", ">= 5.1", "< 9"
 
-  s.add_development_dependency "bundler", "~> 2"
+  s.add_development_dependency "bundler", ">= 2", "< 5"
   s.add_development_dependency "listen", "~> 3.2"
   s.add_development_dependency "pry-byebug", "~> 3.9"
   s.add_development_dependency "rake", "~> 13"
