@@ -21,10 +21,6 @@ jobs:
         experimental: [false]
         include:
           - ruby: "4.0"
-            os: ubuntu-22.04
-            gemfile: Gemfile-rails-edge
-            experimental: true
-          - ruby: "4.0"
             os: ubuntu-latest
             gemfile: Gemfile-rails-edge
             experimental: true
@@ -39,13 +35,13 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Install Readline dependencies
+        run: sudo apt-get update && sudo apt-get install -y libreadline-dev
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-
-      - name: Install Dependencies
-        run: sudo apt-get install libreadline-dev
 
       - name: Setup Code Climate test-reporter
         if: ${{ contains(github.ref, 'main') }}
