@@ -92,7 +92,7 @@ The following [config options] are available:
   
   The proc receives a hash with `controller` (the controller name as a string) and `config` (the configuration object) as arguments.
   
-  __Default__: `->(controller:, config:) { "#{controller.camelize}#{config.file_suffix}".tr_s(":", "/") }`
+  __Default__: CamelCase filename convention using `->(controller:, config:) { "#{controller.camelize}#{config.file_suffix}".tr_s(":", "/") }`
 
   ```ruby
   # Example: Use kebab-case filenames
