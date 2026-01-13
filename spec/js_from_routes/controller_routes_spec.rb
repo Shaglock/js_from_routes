@@ -1,3 +1,6 @@
+require "vanilla/config/application"
+require "vanilla/config/routes"
+
 describe JsFromRoutes::ControllerRoutes do
   # Array of controller paths to be tested
   let(:controllers) { %w[comments settings/user_preferences video_clips some/deeply/nested/controller] }
