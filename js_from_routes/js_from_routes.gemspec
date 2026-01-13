@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", ">= 2", "< 5"
   s.add_development_dependency "listen", "~> 3.2"
   s.add_development_dependency "pry-byebug", "~> 3.9"
+  s.add_development_dependency "reline", '~> 0.6'
   s.add_development_dependency "rake", "~> 13"
   s.add_development_dependency "rspec-given", "~> 3.8"
   s.add_development_dependency "simplecov", "< 0.18"
