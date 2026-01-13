@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - '**'
+      - "**"
 
 jobs:
   rspec:
@@ -16,16 +16,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        ruby: [
-          "3.2",
-          "3.3",
-        ]
-        gemfile: [
-          "Gemfile-rails.7.2.x",
-          "Gemfile-rails.8.0.x",
-        ]
+        ruby: ["3.2", "3.3", "3.4"]
+        gemfile: ["Gemfile-rails.7.2.x", "Gemfile-rails.8.0.x"]
         experimental: [false]
         include:
+          - ruby: "4.0"
+            os: ubuntu-22.04
+            gemfile: Gemfile-rails-edge
+            experimental: true
           - ruby: "4.0"
             os: ubuntu-latest
             gemfile: Gemfile-rails-edge
@@ -39,12 +37,15 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+
+      - name: Install Dependencies
+        run: sudo apt-get install libreadline-dev
 
       - name: Setup Code Climate test-reporter
         if: ${{ contains(github.ref, 'main') }}
@@ -88,7 +89,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - run: pnpm install --frozen-lockfile
 
