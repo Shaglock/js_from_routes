@@ -2,6 +2,7 @@ spec/support/generated
 spec/support/sample_app/bin
 
 /.bundle
+/vendor/bundle
 pkg
 log
 tmp
