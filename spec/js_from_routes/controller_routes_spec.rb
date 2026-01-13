@@ -9,9 +9,11 @@ describe JsFromRoutes::ControllerRoutes do
   let(:config) { JsFromRoutes::Configuration.new(::Rails.root || Pathname.new(Dir.pwd)) }
 
   describe "#basename" do
-    context "when filename_style is kebab" do
+    context "with kebab-case filename configuration" do
       it "returns the correct basename" do
-        config.filename_style = :kebab
+        config.filename_for_controller = ->(controller:, config:) {
+          "#{controller.underscore.tr('_', '-')}-#{config.file_suffix.downcase}"
+        }
 
         controllers.each_with_index do |controller, index|
           controller_routes = described_class.new(controller, routes, config)
@@ -20,9 +22,11 @@ describe JsFromRoutes::ControllerRoutes do
       end
     end
 
-    context "when filename_style is camel" do
+    context "with camel-case filename configuration" do
       it "returns the correct basename" do
-        config.filename_style = :camel
+        config.filename_for_controller = ->(controller:, config:) {
+          "#{controller.camelize}#{config.file_suffix}".tr_s(":", "/")
+        }
 
         controllers.each_with_index do |controller, index|
           controller_routes = described_class.new(controller, routes, config)
@@ -31,12 +35,23 @@ describe JsFromRoutes::ControllerRoutes do
       end
     end
 
-    context "when filename_style is default" do
+    context "when filename_for_controller is default" do
       it "returns the correct basename" do
         controllers.each_with_index do |controller, index|
           controller_routes = described_class.new(controller, routes, config)
           expect(controller_routes.send(:basename)).to eq(basenames_camel[index])
         end
+      end
+    end
+
+    context "with custom filename configuration" do
+      it "returns the correct basename" do
+        config.filename_for_controller = ->(controller:, config:) {
+          "custom_#{controller.underscore}_#{config.file_suffix}"
+        }
+
+        controller_routes = described_class.new("comments", routes, config)
+        expect(controller_routes.send(:basename)).to eq("custom_comments_Api.js")
       end
     end
   end
